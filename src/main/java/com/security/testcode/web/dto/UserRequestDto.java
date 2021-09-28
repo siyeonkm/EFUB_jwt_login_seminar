@@ -1,0 +1,20 @@
+package com.security.testcode.web.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class UserRequestDto {
+    private String email;
+    private String nickname;
+    private String password;
+
+    public UserRequestDto (String email, String nickname, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
+}
