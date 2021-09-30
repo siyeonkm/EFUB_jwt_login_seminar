@@ -2,24 +2,18 @@ package com.security.testcode.web;
 
 import com.security.testcode.config.JwtTokenProvider;
 import com.security.testcode.config.MyUserDetail;
-import com.security.testcode.domain.ExRepository;
 import com.security.testcode.domain.User;
-import com.security.testcode.service.ExService;
+import com.security.testcode.service.UserService;
 import com.security.testcode.web.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class ExController {
-    private final ExService service;
+public class UserController {
+    private final UserService service;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 

@@ -1,6 +1,6 @@
 package com.security.testcode.config;
 
-import com.security.testcode.service.ExService;
+import com.security.testcode.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -14,17 +14,15 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private String secretKey = "webfirewood";
+    private final UserService userService;
+    private String secretKey = "efubisthebest";
 
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
-
-    private final ExService exService;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
     @PostConstruct
@@ -48,7 +46,7 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        MyUserDetail userDetails = exService.loadUserByUsername(this.getUserPk(token));
+        MyUserDetail userDetails = userService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
