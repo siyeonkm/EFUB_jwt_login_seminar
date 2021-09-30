@@ -19,18 +19,17 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void joinUser(UserRequestDto user) {
-        User newUser = User.builder().nickname(user.getNickname())
-                        .email(user.getEmail())
-                        .password(passwordEncoder.encode(user.getPassword())).build();
+        User newUser = User.builder()
+                .email(user.getEmail())
+                .password(user.getPassword()).build();
         repository.save(newUser);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public MyUserDetail loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repository.findByEmail(email);
         return new MyUserDetail(user);
     }

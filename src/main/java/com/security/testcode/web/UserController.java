@@ -6,6 +6,7 @@ import com.security.testcode.web.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/signUp")
     public String signUpForm() {
@@ -22,7 +24,8 @@ public class UserController {
 
     @PostMapping("/signUp")
     public String signUp(@ModelAttribute UserRequestDto dto) {
-        System.out.println("password: " + dto.getPassword());
+        String encoded = passwordEncoder.encode(dto.getPassword());
+        dto.setPassword(encoded);
         service.joinUser(dto);
         return "redirect:/login";
     }
