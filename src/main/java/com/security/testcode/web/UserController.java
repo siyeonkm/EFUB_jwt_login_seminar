@@ -1,8 +1,7 @@
 package com.security.testcode.web;
 
 import com.security.testcode.config.MyUserDetail;
-import com.security.testcode.domain.User;
-import com.security.testcode.service.ExService;
+import com.security.testcode.service.UserService;
 import com.security.testcode.web.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
-public class ExController {
-    private final ExService service;
+public class UserController {
+    private final UserService service;
 
     @GetMapping("/signUp")
     public String signUpForm() {
