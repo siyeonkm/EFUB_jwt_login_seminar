@@ -6,6 +6,7 @@ import com.security.testcode.web.dto.UserRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,16 +32,18 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String userAccess(Model model, Authentication authentication) {
+    public String userAccess(Model model) {
         //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
-        MyUserDetail userDetail = (MyUserDetail)authentication.getPrincipal();  //userDetail 객체를 가져옴
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetail userDetail = (MyUserDetail)principal;
         model.addAttribute("info", userDetail.getUsername());      //유저 이메일
         return "user_access";
     }
 
     @GetMapping("/userOnly")
-    public String authenticated(Model model, Authentication authentication) {
-        MyUserDetail userDetail = (MyUserDetail)authentication.getPrincipal();
+    public String authenticated(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetail userDetail = (MyUserDetail)principal;
         String response =  "현재 로그인된 유저: " + userDetail.getUsername();
         model.addAttribute("info", response);
         return "authenticated";
